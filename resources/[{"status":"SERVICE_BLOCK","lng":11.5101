@@ -1,0 +1,281 @@
+// vehicle ID   -> string
+// status       -> BOOKED/FREE
+// longitude    -> float
+// latidue      -> float
+// charge       -> float
+
+[
+  {
+    "status": "SERVICE_BLOCK",
+    "lng": 11.510139695252404,
+    "vehicleID": "1RvnEhZZ9brca4Wqbt5h",
+    "lat": 48.04323044296281,
+    "charge": "99.99999999999"
+  },
+  {
+    "status": "FREE",
+    "vehicleID": "4bpFQtrmqcJ1wGnsP7sw",
+    "lng": 4,
+    "lat": 3,
+    "charge": 56
+  },
+  {
+    "lat": 48.2,
+    "lng": 11.6,
+    "charge": 65,
+    "status": "FREE",
+    "vehicleID": "5xH1xsNsOrPtKENxI73C"
+  },
+  {
+    "vehicleID": "6U8fWPnq8dNEhb4eqacR",
+    "lng": 11.510139695252404,
+    "lat": 48.04323044296281,
+    "charge": 100,
+    "status": "BOOKED"
+  },
+  {
+    "lat": 48.13979681821804,
+    "vehicleID": "77ADiv9eITdsFPv2VnF9",
+    "charge": 50,
+    "lng": 11.539934161565183,
+    "status": "FREE"
+  },
+  {
+    "lng": 11.510139695252404,
+    "lat": 48.04323044296281,
+    "status": "FREE",
+    "vehicleID": "8QXnu0MzgIaEXWVun0nz",
+    "charge": 100
+  },
+  {
+    "charge": 30,
+    "lat": 48.12565323016478,
+    "lng": 11.587108041587578,
+    "status": "FREE",
+    "vehicleID": "9bCzNa8cgCFQogn7G5bp"
+  },
+  {
+    "lat": 48.154183853041644,
+    "charge": 100,
+    "status": "FREE",
+    "lng": 11.582905683362053,
+    "vehicleID": "Aus4ATpKwPSa9HBR48v9"
+  },
+  {
+    "lng": 11.790003269550036,
+    "lat": 48.35499658770829,
+    "vehicleID": "BOak6jS8FydkUFgzddtF",
+    "status": "FREE",
+    "charge": 70
+  },
+  {
+    "charge": 45,
+    "status": "FREE",
+    "lat": 48.12704604488845,
+    "lng": 11.643226819804276,
+    "vehicleID": "COTS9UUkhTsyHpkT7l5X"
+  },
+  {
+    "status": "FREE",
+    "vehicleID": "D1YAqHfbj6Uh8eZiK5k9",
+    "lng": 11.579068747841635,
+    "lat": 48.11510263969329,
+    "charge": 10
+  },
+  {
+    "charge": 70,
+    "vehicleID": "DG1vnMPO8VJW23EX3m6I",
+    "lat": 48.04323044296281,
+    "status": "FREE",
+    "lng": 11.510139695252404
+  },
+  {
+    "lng": 11.572146360320891,
+    "lat": 48.15136748667542,
+    "vehicleID": "EHetHzyCGnGeO06Uc83c",
+    "status": "FREE",
+    "charge": 83
+  },
+  {
+    "status": "FREE",
+    "lng": 11.664230091310268,
+    "vehicleID": "GlFbrOHjjRmgHkaT1QkV",
+    "charge": 20,
+    "lat": 48.262029013434365
+  },
+  {
+    "vehicleID": "HF8fiVh1Tyv4CgKMuLPp",
+    "status": "FREE",
+    "lat": 48.04574981111989,
+    "lng": 11.526944149121897,
+    "charge": 100
+  },
+  {
+    "vehicleID": "HRmGgozYfoRz9XNtGVhl",
+    "lat": 48.10164910921263,
+    "lng": 11.567190424653084,
+    "charge": 70,
+    "status": "FREE"
+  },
+  {
+    "lat": 48.141455284205165,
+    "charge": 100,
+    "status": "FREE",
+    "lng": 11.575019698173595,
+    "vehicleID": "HfOMEysR6WBaIY4PBaE9"
+  },
+  {
+    "charge": 97,
+    "vehicleID": "JwHHp6byOASx3x5cG4NU",
+    "lat": 48.14187129838962,
+    "status": "FREE",
+    "lng": 11.60236443102774
+  },
+  {
+    "vehicleID": "Plt8X6UVs3RnEhSZYiQL",
+    "lat": 48.16174229710019,
+    "charge": 76,
+    "status": "FREE",
+    "lng": 11.586843629797913
+  },
+  {
+    "lat": 48.1411259559854,
+    "status": "FREE",
+    "vehicleID": "QFPvIaxfqSMlcyTgpiQv",
+    "charge": 100,
+    "lng": 11.564591269895596
+  },
+  {
+    "status": "FREE",
+    "lat": 48.161325069455856,
+    "charge": 80,
+    "lng": 11.577461160884159,
+    "vehicleID": "UNJKpbOFLyNrajXAOkUp"
+  },
+  {
+    "vehicleID": "Wqn3DNzEh7o6d38Xta3r",
+    "lng": 11.510139695252404,
+    "charge": 100,
+    "status": "FREE",
+    "lat": 48.04323044296281
+  },
+  {
+    "charge": 99,
+    "vehicleID": "Y4ObZ0JGxAT2nOlHqLW8",
+    "lat": 48.15533061859121,
+    "status": "FREE",
+    "lng": 11.555838954728802
+  },
+  {
+    "lng": 11.787496296722862,
+    "charge": 100,
+    "status": "FREE",
+    "lat": 48.35105850644367,
+    "vehicleID": "fO3tGY83eVuHaQW3VP0P"
+  },
+  {
+    "lng": 11.761044881363674,
+    "status": "FREE",
+    "charge": 100,
+    "vehicleID": "ffrFtp0sOWJN30kCAMDi",
+    "lat": 48.34894240989115
+  },
+  {
+    "lat": 48.093445798051775,
+    "status": "FREE",
+    "lng": 11.569933186009669,
+    "vehicleID": "filc5D1gKHTF3BaBiIwn",
+    "charge": 10
+  },
+  {
+    "status": "FREE",
+    "lng": 11.646032420222419,
+    "vehicleID": "hVERUynhyubFPu0UufOO",
+    "lat": 48.096618638390474,
+    "charge": 0
+  },
+  {
+    "lng": 11.636634268330798,
+    "lat": 48.10789950665855,
+    "status": "FREE",
+    "vehicleID": "ia6E3UulrN7CCNY9PYnr",
+    "charge": 30
+  },
+  {
+    "charge": 100,
+    "status": "FREE",
+    "lat": 48.19270306524782,
+    "vehicleID": "ihDYugM2TaE4rt4ofbSU",
+    "lng": 11.59039526350017
+  },
+  {
+    "charge": 100,
+    "vehicleID": "j8pyOeRcKCgvARgDQtAK",
+    "lng": 11.510139695252404,
+    "status": "FREE",
+    "lat": 48.04323044296281
+  },
+  {
+    "lng": 11.604922389474845,
+    "status": "FREE",
+    "charge": 100,
+    "vehicleID": "jikuR56lRBSRfUwE25LS",
+    "lat": 48.104610887016676
+  },
+  {
+    "lng": 11.761044881363674,
+    "lat": 48.34894240989115,
+    "charge": 89,
+    "vehicleID": "kyGJoyCkzLtuvIhb3KfC",
+    "status": "BOOKED"
+  },
+  {
+    "charge": 20,
+    "lat": 48.15576842255551,
+    "status": "FREE",
+    "vehicleID": "lGZh0YEMrrfWnBdKmmhl",
+    "lng": 11.514845743058148
+  },
+  {
+    "lat": 48.187587196105575,
+    "lng": 11.562029342019544,
+    "status": "FREE",
+    "vehicleID": "ncQBzv3qKjjcStOjx1q5",
+    "charge": 80
+  },
+  {
+    "lat": 48.26337177723579,
+    "status": "FREE",
+    "lng": 11.663886768568604,
+    "charge": 34,
+    "vehicleID": "pVTzjDJM4le7MT76HK9X"
+  },
+  {
+    "lng": 11.570572674989407,
+    "charge": 100,
+    "vehicleID": "pdZoe8v5Kv07XfRyNiZE",
+    "lat": 48.12845822484943,
+    "status": "FREE"
+  },
+  {
+    "lat": 48.262486128475764,
+    "charge": 45,
+    "lng": 11.663672191855063,
+    "vehicleID": "rZ5PtUwfFkISEbtc7cP6",
+    "status": "FREE"
+  },
+  {
+    "charge": 96,
+    "lng": 11.560677159384943,
+    "lat": 48.13431868375863,
+    "vehicleID": "sjEdPPpSpD9a0tm0rXr8",
+    "status": "FREE"
+  },
+  {
+    "lat": 55,
+    "status": "BOOKED",
+    "charge": 100,
+    "vehicleID": "wuEfHYhUiEFg9MMjFEsE",
+    "lng": 60
+  }
+]
