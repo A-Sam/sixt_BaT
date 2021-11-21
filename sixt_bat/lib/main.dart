@@ -17,18 +17,20 @@ class _MyAppState extends State<MyApp> {
   final Map<String, Marker> _markers = {};
 
   BitmapDescriptor mapMarker = BitmapDescriptor.defaultMarker;
+  static const munichCenterLat = 48.1351;
+  static const munichCenterLng = 11.5820;
 
   @override
   void initState() {
     super.initState();
-    // setCusomMarker();
+    setCusomMarker();
   }
 
   @override
   void setCusomMarker() async {
     mapMarker = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(), 'assets/mobileye_robotaxi.png');
-    print("initialized ....");
+        const ImageConfiguration(size: Size(60, 40)),
+        'assets/mobileye_robotaxi.png');
   }
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
@@ -60,8 +62,8 @@ class _MyAppState extends State<MyApp> {
         body: GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: const CameraPosition(
-            target: LatLng(0, 0),
-            zoom: 2,
+            target: LatLng(munichCenterLat, munichCenterLng),
+            zoom: 13,
           ),
           markers: _markers.values.toSet(),
         ),
