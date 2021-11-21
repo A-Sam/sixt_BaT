@@ -2,99 +2,54 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:json_annotation/json_annotation.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'dart:developer';
 
-part 'locations.g.dart';
+// part 'locations.g.dart';
 
-@JsonSerializable()
-class LatLng {
-  LatLng({
+class Vehicle {
+  Vehicle({
+    required this.vehicleID,
+    required this.status,
     required this.lat,
     required this.lng,
+    required this.charge,
   });
 
-  factory LatLng.fromJson(Map<String, dynamic> json) => _$LatLngFromJson(json);
-  Map<String, dynamic> toJson() => _$LatLngToJson(this);
-
+  final String vehicleID;
+  final String status;
   final double lat;
   final double lng;
+  final double charge;
 }
 
-@JsonSerializable()
-class Region {
-  Region({
-    required this.coords,
-    required this.id,
-    required this.name,
-    required this.zoom,
-  });
+Future<List<Vehicle>> getVehicles() async {
+  const fleetURL =
+      "https://us-central1-sixt-hackatum-2021.cloudfunctions.net/api/vehicles";
 
-  factory Region.fromJson(Map<String, dynamic> json) => _$RegionFromJson(json);
-  Map<String, dynamic> toJson() => _$RegionToJson(this);
-
-  final LatLng coords;
-  final String id;
-  final String name;
-  final double zoom;
-}
-
-@JsonSerializable()
-class Office {
-  Office({
-    required this.address,
-    required this.id,
-    required this.image,
-    required this.lat,
-    required this.lng,
-    required this.name,
-    required this.phone,
-    required this.region,
-  });
-
-  factory Office.fromJson(Map<String, dynamic> json) => _$OfficeFromJson(json);
-  Map<String, dynamic> toJson() => _$OfficeToJson(this);
-
-  final String address;
-  final String id;
-  final String image;
-  final double lat;
-  final double lng;
-  final String name;
-  final String phone;
-  final String region;
-}
-
-@JsonSerializable()
-class Locations {
-  Locations({
-    required this.offices,
-    required this.regions,
-  });
-
-  factory Locations.fromJson(Map<String, dynamic> json) =>
-      _$LocationsFromJson(json);
-  Map<String, dynamic> toJson() => _$LocationsToJson(this);
-
-  final List<Office> offices;
-  final List<Region> regions;
-}
-
-Future<Locations> getGoogleOffices() async {
-  const googleLocationsURL = 'https://about.google/static/data/locations.json';
-
-  // Retrieve the locations of Google offices
+  // Retrieve the locations of vehicles
   try {
-    final response = await http.get(Uri.parse(googleLocationsURL));
+    final response = await http.get(Uri.parse(fleetURL));
     if (response.statusCode == 200) {
-      return Locations.fromJson(json.decode(response.body));
+      // List<Vehicle> vehicles;
+      List<dynamic> fleetJson = (json.decode(response.body) as List);
+      List<Vehicle> fleetVehicles = [];
+      for (final vehicle in fleetJson) {
+        fleetVehicles.add(Vehicle(
+            vehicleID: vehicle['vehicleID'].toString(),
+            status: vehicle['status'].toString(),
+            lat: double.parse(vehicle['lat'].toString()),
+            lng: double.parse(vehicle['lng'].toString()),
+            charge: double.parse(vehicle['charge'].toString())));
+      }
+      return fleetVehicles;
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception('Failed to load post');
     }
   } catch (e) {
-    print(e);
+    print("ERROR: " + e.toString());
   }
 
   // Fallback for when the above HTTP request fails.
-  return Locations.fromJson(
-    json.decode(
-      await rootBundle.loadString('assets/locations.json'),
-    ),
-  );
+  return [];
 }

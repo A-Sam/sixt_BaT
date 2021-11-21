@@ -29,3 +29,4 @@ flutter:
 
   assets:
     - assets/locations.json
+    - assets/mobileye_robotaxi.png
