@@ -74,30 +74,12 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
     });
   }
 
-  // void _onMapUpdate(CameraPosition cam_pos) async {
-  //   final vehicles = await fleet.getVehicles();
-  //   setState(() {
-  //     print("upadting.... " + cam_pos.target.latitude.toString());
-  //     _markers.clear();
-  //     for (final vehicle in vehicles) {
-  //       final marker = Marker(
-  //           markerId: MarkerId(vehicle.vehicleID),
-  //           position: LatLng(vehicle.lat, vehicle.lng),
-  //           infoWindow: InfoWindow(
-  //             title: vehicle.vehicleID,
-  //             snippet: "[Charge]\t" +
-  //                 vehicle.charge.toString() +
-  //                 "\n" +
-  //                 "[lat,lng]\t" +
-  //                 vehicle.lat.toString() +
-  //                 ", " +
-  //                 vehicle.lng.toString(),
-  //           ),
-  //           icon: mapVehicleMarker);
-  //       _markers[vehicle.vehicleID] = marker;
-  //     }
-  //   });
-  // }
+  void _onMapUpdate(CameraPosition cam_pos) async {
+    final vehicles = await fleet.getVehicles();
+    setState(() {
+      print("upadting.... " + cam_pos.target.latitude.toString());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +104,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
             Center(
                 child: GoogleMap(
               onMapCreated: _onMapCreated,
-              // onCameraMove: _onMapUpdate,
+              onCameraMove: _onMapUpdate,
               initialCameraPosition: const CameraPosition(
                 target: LatLng(munichCenterLat, munichCenterLng),
                 zoom: 13,
