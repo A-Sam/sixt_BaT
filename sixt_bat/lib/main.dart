@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'src/locations.dart' as fleet;
+import 'src/classes.dart' as fleet;
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +18,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   static const munichCenterLat = 48.1351;
   static const munichCenterLng = 11.5820;
   late TabController _tabController;
+  late GoogleMapController global_controller_;
 
   BitmapDescriptor mapVehicleMarker = BitmapDescriptor.defaultMarker;
   BitmapDescriptor mapPickupSpoteMarker = BitmapDescriptor.defaultMarker;
@@ -41,14 +42,27 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
         'assets/mobileye_robotaxi.png');
   }
 
+  void onTapUpdateMarker() async {
+    // floatingActionButton: FloatingActionButton(
+    //       //  onPressed: () => bookings.createBooking(booking),
+    //         onPressed: () => bookings.createBooking(),
+    //         child: const Text('Book now'),
+    //       ),
+    // global_controller_.showMarkerInfoWindow(MarkerId("Wqn3DNzEh7o6d38Xta3r"));
+    print("car selected");
+  }
+
   Future<void> _onMapCreated(GoogleMapController controller) async {
     final vehicles = await fleet.getVehicles();
+    global_controller_ = controller;
     setState(() {
       _markers.clear();
+
       for (final vehicle in vehicles) {
         final marker = Marker(
             markerId: MarkerId(vehicle.vehicleID),
             position: LatLng(vehicle.lat, vehicle.lng),
+            onTap: onTapUpdateMarker,
             infoWindow: InfoWindow(
               title: vehicle.vehicleID,
               snippet: vehicle.charge.toString(),
@@ -59,30 +73,30 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
     });
   }
 
-  void _onMapUpdate(CameraPosition cam_pos) async {
-    final vehicles = await fleet.getVehicles();
-    setState(() {
-      print("upadting.... " + cam_pos.target.latitude.toString());
-      _markers.clear();
-      for (final vehicle in vehicles) {
-        final marker = Marker(
-            markerId: MarkerId(vehicle.vehicleID),
-            position: LatLng(vehicle.lat, vehicle.lng),
-            infoWindow: InfoWindow(
-              title: vehicle.vehicleID,
-              snippet: "[Charge]\t" +
-                  vehicle.charge.toString() +
-                  "\n" +
-                  "[lat,lng]\t" +
-                  vehicle.lat.toString() +
-                  ", " +
-                  vehicle.lng.toString(),
-            ),
-            icon: mapVehicleMarker);
-        _markers[vehicle.vehicleID] = marker;
-      }
-    });
-  }
+  // void _onMapUpdate(CameraPosition cam_pos) async {
+  //   final vehicles = await fleet.getVehicles();
+  //   setState(() {
+  //     print("upadting.... " + cam_pos.target.latitude.toString());
+  //     _markers.clear();
+  //     for (final vehicle in vehicles) {
+  //       final marker = Marker(
+  //           markerId: MarkerId(vehicle.vehicleID),
+  //           position: LatLng(vehicle.lat, vehicle.lng),
+  //           infoWindow: InfoWindow(
+  //             title: vehicle.vehicleID,
+  //             snippet: "[Charge]\t" +
+  //                 vehicle.charge.toString() +
+  //                 "\n" +
+  //                 "[lat,lng]\t" +
+  //                 vehicle.lat.toString() +
+  //                 ", " +
+  //                 vehicle.lng.toString(),
+  //           ),
+  //           icon: mapVehicleMarker);
+  //       _markers[vehicle.vehicleID] = marker;
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -107,12 +121,15 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
             Center(
                 child: GoogleMap(
               onMapCreated: _onMapCreated,
-              onCameraMove: _onMapUpdate,
+              // onCameraMove: _onMapUpdate,
               initialCameraPosition: const CameraPosition(
                 target: LatLng(munichCenterLat, munichCenterLng),
                 zoom: 13,
               ),
               markers: _markers.values.toSet(),
+              myLocationEnabled: true,
+              compassEnabled: true,
+              tiltGesturesEnabled: false,
             )),
             Center(
               child: Container(
