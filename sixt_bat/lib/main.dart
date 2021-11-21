@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:six_bat/src/bookings.dart';
+
+import 'src/bookings.dart' as bookings;
 import 'src/locations.dart' as locations;
 
 void main() {
@@ -15,6 +18,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final Map<String, Marker> _markers = {};
+  //late final Booking booking;
   Future<void> _onMapCreated(GoogleMapController controller) async {
     final googleOffices = await locations.getGoogleOffices();
     setState(() {
@@ -49,7 +53,14 @@ class _MyAppState extends State<MyApp> {
           ),
           markers: _markers.values.toSet(),
         ),
+        floatingActionButton: FloatingActionButton(
+        //  onPressed: () => bookings.createBooking(booking),
+          onPressed: () => bookings.createBooking(),
+          child: const Text('Book now'),
+        ),
+
       ),
     );
   }
 }
+
