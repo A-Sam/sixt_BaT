@@ -16,19 +16,20 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final Map<String, Marker> _markers = {};
 
-  late BitmapDescriptor myIcon;
+  BitmapDescriptor mapMarker = BitmapDescriptor.defaultMarker;
 
   @override
-  // void initState() {
-  //   BitmapDescriptor.fromAssetImage(
-  //           const ImageConfiguration(size: Size(48, 48)),
-  //           '/Users/sam/ws/private-projects/sixt_BaT/sixt_bat/assets/mobileye_robotaxi.png')
-  //       .then((onValue) {
-  //     myIcon = onValue;
-  //     print("onvalue ....");
-  //   });
-  //   print("initialized ....");
-  // }
+  void initState() {
+    super.initState();
+    // setCusomMarker();
+  }
+
+  @override
+  void setCusomMarker() async {
+    mapMarker = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(), 'assets/mobileye_robotaxi.png');
+    print("initialized ....");
+  }
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
     final vehicles = await fleet.getVehicles();
@@ -36,14 +37,13 @@ class _MyAppState extends State<MyApp> {
       _markers.clear();
       for (final vehicle in vehicles) {
         final marker = Marker(
-          markerId: MarkerId(vehicle.vehicleID),
-          position: LatLng(vehicle.lat, vehicle.lng),
-          infoWindow: InfoWindow(
-            title: vehicle.vehicleID,
-            snippet: vehicle.charge.toString(),
-          ),
-          // icon: myIcon
-        );
+            markerId: MarkerId(vehicle.vehicleID),
+            position: LatLng(vehicle.lat, vehicle.lng),
+            infoWindow: InfoWindow(
+              title: vehicle.vehicleID,
+              snippet: vehicle.charge.toString(),
+            ),
+            icon: mapMarker);
         _markers[vehicle.vehicleID] = marker;
       }
     });

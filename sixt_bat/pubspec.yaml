@@ -28,5 +28,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/locations.json
+    - assets/vehicles.json
+    - assets/persons.json
     - assets/mobileye_robotaxi.png
+    - assets/favicon.png
