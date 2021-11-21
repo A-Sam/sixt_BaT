@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'src/classes.dart' as fleet;
+import 'src/bookings.dart';
 
 void main() {
   runApp(const MyApp());
@@ -42,15 +43,15 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
         'assets/mobileye_robotaxi.png');
   }
 
-  void onTapUpdateMarker() async {
-    // floatingActionButton: FloatingActionButton(
-    //       //  onPressed: () => bookings.createBooking(booking),
-    //         onPressed: () => bookings.createBooking(),
-    //         child: const Text('Book now'),
-    //       ),
-    // global_controller_.showMarkerInfoWindow(MarkerId("Wqn3DNzEh7o6d38Xta3r"));
-    print("car selected");
-  }
+  // void onTapUpdateMarker() async {
+  //   // floatingActionButton: FloatingActionButton(
+  //   //       //  onPressed: () => bookings.createBooking(booking),
+  //   //         onPressed: () => bookings.createBooking(),
+  //   //         child: const Text('Book now'),
+  //   //       ),
+  //   // global_controller_.showMarkerInfoWindow(MarkerId("Wqn3DNzEh7o6d38Xta3r"));
+  //   print("car selected");
+  // }
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
     final vehicles = await fleet.getVehicles();
@@ -62,7 +63,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
         final marker = Marker(
             markerId: MarkerId(vehicle.vehicleID),
             position: LatLng(vehicle.lat, vehicle.lng),
-            onTap: onTapUpdateMarker,
+            onTap: () => createBooking(vehicle.vehicleID),
             infoWindow: InfoWindow(
               title: vehicle.vehicleID,
               snippet: vehicle.charge.toString(),

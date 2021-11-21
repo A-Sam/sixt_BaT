@@ -9,7 +9,6 @@ part 'bookings.g.dart';
 
 @JsonSerializable()
 class Booking {
-
   Booking({
     required this.booking_id,
     required this.customer_id,
@@ -18,7 +17,8 @@ class Booking {
     this.success = false,
   });
 
-  factory Booking.fromJson(Map<String, dynamic> json) => _$BookingFromJson(json);
+  factory Booking.fromJson(Map<String, dynamic> json) =>
+      _$BookingFromJson(json);
 
   Map<String, dynamic> toJson() => _$BookingToJson(this);
 
@@ -31,34 +31,31 @@ class Booking {
 
 //TODO Return Vehicle list
 //void createBooking(Booking booking) {
-void createBooking() {
+void createBooking(String vehicleID) {
   print("In bookings.createBooking()");
-  var vehicleId = "1";
+  // var vehicleId = "1";
   var customerId = "2";
   var bookingTime = "";
   var bookingId = "DEMO";
+  print(vehicleID);
 
   try {
-      var booking = Booking(booking_id: bookingId,
+    var booking = Booking(
+        booking_id: bookingId,
         customer_id: customerId,
-        vehicle_id: vehicleId,
+        vehicle_id: vehicleID,
         booking_time: bookingTime,
-        success : true); //TODO proper try catch
+        success: true); //TODO proper try catch
 
     // TODO for now store in booking global var
-   //File file = File('src/Assets/DemoDB.txt');
+    //File file = File('src/Assets/DemoDB.txt');
     //print("File accessed");
 
     // Write the file
-   // file.writeAsString('$booking');
-  } on Exception catch (e) {
-
-  }
-
+    // file.writeAsString('$booking');
+  } on Exception catch (e) {}
 
   Future<bool> getSuccessStatus(Booking booking) async {
-
     return booking.success;
   }
-
 }
