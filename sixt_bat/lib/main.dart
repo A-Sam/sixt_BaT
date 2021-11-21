@@ -13,22 +13,30 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   final Map<String, Marker> _markers = {};
-
-  BitmapDescriptor mapMarker = BitmapDescriptor.defaultMarker;
   static const munichCenterLat = 48.1351;
   static const munichCenterLng = 11.5820;
+  late TabController _tabController;
+
+  BitmapDescriptor mapVehicleMarker = BitmapDescriptor.defaultMarker;
+  BitmapDescriptor mapPickupSpoteMarker = BitmapDescriptor.defaultMarker;
 
   @override
   void initState() {
     super.initState();
     setCusomMarker();
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
+  }
+
   void setCusomMarker() async {
-    mapMarker = await BitmapDescriptor.fromAssetImage(
+    mapVehicleMarker = await BitmapDescriptor.fromAssetImage(
         const ImageConfiguration(size: Size(60, 40)),
         'assets/mobileye_robotaxi.png');
   }
@@ -45,7 +53,32 @@ class _MyAppState extends State<MyApp> {
               title: vehicle.vehicleID,
               snippet: vehicle.charge.toString(),
             ),
-            icon: mapMarker);
+            icon: mapVehicleMarker);
+        _markers[vehicle.vehicleID] = marker;
+      }
+    });
+  }
+
+  void _onMapUpdate(CameraPosition cam_pos) async {
+    final vehicles = await fleet.getVehicles();
+    setState(() {
+      print("upadting.... " + cam_pos.target.latitude.toString());
+      _markers.clear();
+      for (final vehicle in vehicles) {
+        final marker = Marker(
+            markerId: MarkerId(vehicle.vehicleID),
+            position: LatLng(vehicle.lat, vehicle.lng),
+            infoWindow: InfoWindow(
+              title: vehicle.vehicleID,
+              snippet: "[Charge]\t" +
+                  vehicle.charge.toString() +
+                  "\n" +
+                  "[lat,lng]\t" +
+                  vehicle.lat.toString() +
+                  ", " +
+                  vehicle.lng.toString(),
+            ),
+            icon: mapVehicleMarker);
         _markers[vehicle.vehicleID] = marker;
       }
     });
@@ -54,19 +87,93 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Sixt BaT',
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(color: Colors.orange[400], elevation: 0),
+        accentColor: Colors.orange[400],
+        brightness: Brightness.light,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        /* dark theme settings */
+      ),
+      themeMode: ThemeMode.dark,
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Google Office Locations'),
-          backgroundColor: Colors.green[700],
+        backgroundColor: Colors.white,
+        body: TabBarView(
+          physics: BouncingScrollPhysics(),
+          children: <Widget>[
+            Center(
+                child: GoogleMap(
+              onMapCreated: _onMapCreated,
+              onCameraMove: _onMapUpdate,
+              initialCameraPosition: const CameraPosition(
+                target: LatLng(munichCenterLat, munichCenterLng),
+                zoom: 13,
+              ),
+              markers: _markers.values.toSet(),
+            )),
+            Center(
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    color: Colors.orange[400]),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Booking",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+            Center(
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    color: Colors.orange[400]),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Settings",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ],
+          controller: _tabController,
         ),
-        body: GoogleMap(
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: const CameraPosition(
-            target: LatLng(munichCenterLat, munichCenterLng),
-            zoom: 13,
+        bottomNavigationBar: buildBottomNavigationBar(),
+      ),
+    );
+  }
+
+  Material buildBottomNavigationBar() {
+    return Material(
+      elevation: 0.0,
+      child: TabBar(
+        controller: _tabController,
+        indicatorColor: Colors.orange[400],
+        labelColor: Colors.orange[400],
+        unselectedLabelColor: Colors.orange[400],
+        tabs: [
+          Tab(
+            text: "Navigation",
+            iconMargin: EdgeInsets.all(1.0),
           ),
-          markers: _markers.values.toSet(),
-        ),
+          Tab(
+            text: "Booking",
+            iconMargin: EdgeInsets.all(1.0),
+          ),
+          Tab(
+            text: "Settings",
+            iconMargin: EdgeInsets.all(1.0),
+          ),
+        ],
       ),
     );
   }

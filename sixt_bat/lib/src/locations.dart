@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'dart:math';
 
 class Vehicle {
   Vehicle({
@@ -37,6 +38,9 @@ Future<List<Vehicle>> getVehicles() async {
   const fleetURL =
       "https://us-central1-sixt-hackatum-2021.cloudfunctions.net/api/vehicles";
 
+  var vehicleMotionSimulator = new Random();
+  double offset;
+
   // Retrieve the locations of vehicles
   try {
     final response = await http.get(Uri.parse(fleetURL));
@@ -45,6 +49,7 @@ Future<List<Vehicle>> getVehicles() async {
       List<dynamic> fleetJson = (json.decode(response.body) as List);
       List<Vehicle> fleetVehicles = [];
       for (final vehicle in fleetJson) {
+        // offset = vehicleMotionSimulator.nextDouble();
         fleetVehicles.add(Vehicle(
             vehicleID: vehicle['vehicleID'].toString(),
             status: vehicle['status'].toString(),
@@ -65,6 +70,7 @@ Future<List<Vehicle>> getVehicles() async {
   return [];
 }
 
+// FIXME use the lnk to get persons as well as data!
 Future<List<Person>> getPersons() async {
   const fleetURL =
       "https://us-central1-sixt-hackatum-2021.cloudfunctions.net/api/vehicles";
